@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  angular:
+    build: ./qwiz-frontend
+    networks:
+      - frontend
+    ports:
+      - "4200:4200"
+  spring:
+    image: "qwizspring:latest"
+    volumes:
+    - ./.temp:/uploads
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - backend
+    env_file:
+      - "./qwiz-backend/.env"
+    ports:
+      - "8080:8080"
+  mongodb:
+    image: mongo
+    networks:
+      - backend
+
+#volumes:
+#  files:
+
+networks:
+  backend:
+  frontend:

@@ -1,0 +1,62 @@
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header> </mat-card-header>
+    <mat-card-content class="grid">
+      <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Fill out basic quiz details</ng-template>
+            <mat-form-field appearance="fill">
+              <mat-label>Quiz Name</mat-label>
+              <input matInput placeholder="Yet Another Quiz" formControlName="quiz" required />
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Click + to add questions:">
+          <form [formGroup]="secondFormGroup">
+            <ng-container formArrayName="questions">
+              <ng-container *ngFor="let questionForm of questions.controls; let i = index">
+                <div class="question-form-row" [formGroupName]="i">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Question Slides</mat-label>
+                    <input matInput formControlName="que" placeholder="1, 2, 3" />
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Hint Slides</mat-label>
+                    <input matInput formControlName="hint" placeholder="1, 2, 3" />
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Answer Slides</mat-label>
+                    <input matInput formControlName="ans" placeholder="1, 2, 3" />
+                  </mat-form-field>
+                  <mat-icon class="delete-btn" (click)="deleteQuestion(i)">
+                    delete_forever</mat-icon
+                  >
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <button mat-mini-fab (click)="addQuestion()">
+              <mat-icon class="add-course-btn">add</mat-icon>
+            </button>
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <app-file-upload></app-file-upload>
+  </mat-card>
+</div>
