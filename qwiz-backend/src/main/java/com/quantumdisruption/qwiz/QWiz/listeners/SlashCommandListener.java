@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -92,7 +93,7 @@ public class SlashCommandListener implements SlashCommandCreateListener {
     }
 
     private static void sendEvent(EmitterContainer emitterContainer, SseEmitter.SseEventBuilder eventBuilder) {
-        for (SseEmitter emitter : emitterContainer.getPounceSubscribers()) {
+        for (SseEmitter emitter : new ArrayList<>(emitterContainer.getPounceSubscribers())) {
             try {
                 emitter.send(eventBuilder);
             } catch (IOException e) {
