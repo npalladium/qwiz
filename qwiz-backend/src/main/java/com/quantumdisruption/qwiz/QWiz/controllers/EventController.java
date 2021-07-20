@@ -1,5 +1,6 @@
-package com.quantumdisruption.qwiz.QWiz;
+package com.quantumdisruption.qwiz.QWiz.controllers;
 
+import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class EventController {
 
-    @Autowired EmitterContainer emitterContainer;
+    @Autowired
+    EmitterContainer emitterContainer;
     @Autowired private HttpServletRequest servletRequest;
 
 

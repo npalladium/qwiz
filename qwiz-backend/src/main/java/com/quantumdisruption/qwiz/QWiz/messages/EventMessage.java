@@ -1,4 +1,4 @@
-package com.quantumdisruption.qwiz.QWiz;
+package com.quantumdisruption.qwiz.QWiz.messages;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

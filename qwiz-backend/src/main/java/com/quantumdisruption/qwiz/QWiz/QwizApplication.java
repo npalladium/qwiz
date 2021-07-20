@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 @Slf4j
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class DemoApplication {
+public class QwizApplication {
 
     @Value("${bot.token}")
     String token;
@@ -31,7 +31,7 @@ public class DemoApplication {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(QwizApplication.class, args);
     }
 
     private static void onMessageCreate(MessageCreateEvent event) {
@@ -51,7 +51,7 @@ public class DemoApplication {
         DiscordApi api = builder.login().join();
         // Optional will always contain the value.
         Server server = api.getServerById("866228863247319081").get();
-        api.addMessageCreateListener(DemoApplication::onMessageCreate);
+        api.addMessageCreateListener(QwizApplication::onMessageCreate);
         setSlashCommands(server, api);
         logAllListeners(api);
         return api;

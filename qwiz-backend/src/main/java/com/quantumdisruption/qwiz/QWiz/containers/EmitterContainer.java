@@ -1,4 +1,4 @@
-package com.quantumdisruption.qwiz.QWiz;
+package com.quantumdisruption.qwiz.QWiz.containers;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;

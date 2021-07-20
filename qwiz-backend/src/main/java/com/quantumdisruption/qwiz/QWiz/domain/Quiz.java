@@ -1,4 +1,4 @@
-package com.quantumdisruption.qwiz.QWiz;
+package com.quantumdisruption.qwiz.QWiz.domain;
 
 import lombok.AccessLevel;
 import lombok.Data;

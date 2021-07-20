@@ -1,5 +1,6 @@
-package com.quantumdisruption.qwiz.QWiz;
+package com.quantumdisruption.qwiz.QWiz.controllers;
 
+import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -32,7 +33,8 @@ public class UploadController {
 
     private final static String UPLOADED_FOLDER = "/uploads/";
 
-    @Autowired EmitterContainer emitterContainer;
+    @Autowired
+    EmitterContainer emitterContainer;
 
 
     @PostMapping("/upload")

@@ -1,7 +1,7 @@
 package com.quantumdisruption.qwiz.QWiz.listeners;
 
-import com.quantumdisruption.qwiz.QWiz.EmitterContainer;
-import com.quantumdisruption.qwiz.QWiz.EventMessage;
+import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
+import com.quantumdisruption.qwiz.QWiz.messages.EventMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.entity.permission.Role;
 import org.javacord.api.entity.server.Server;
