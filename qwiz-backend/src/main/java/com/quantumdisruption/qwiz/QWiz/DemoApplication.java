@@ -1,7 +1,7 @@
 package com.quantumdisruption.qwiz.QWiz;
 
-import com.quantumdisruption.qwiz.QWiz.listeners.JoinListener;
-import com.quantumdisruption.qwiz.QWiz.listeners.PounceListener;
+import com.quantumdisruption.qwiz.QWiz.listeners.SlashCommandListener;
+import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.server.Server;
@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
+@Slf4j
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class DemoApplication {
 
@@ -26,10 +27,7 @@ public class DemoApplication {
     String token;
 
     @Autowired
-    PounceListener pounceListener;
-
-    @Autowired
-    JoinListener joinListener;
+    SlashCommandListener slashCommandListener;
 
 
     public static void main(String[] args) {
@@ -42,8 +40,8 @@ public class DemoApplication {
         }
     }
 
-    private static void getAllListeners(DiscordApi api) {
-        api.getListeners().values().forEach(value -> value.forEach(list -> System.out.println(list.toString())));
+    private static void logAllListeners(DiscordApi api) {
+        api.getListeners().values().forEach(value -> value.forEach(list -> log.info(list.toString())));
     }
 
     @Bean
@@ -54,9 +52,8 @@ public class DemoApplication {
         // Optional will always contain the value.
         Server server = api.getServerById("866228863247319081").get();
         api.addMessageCreateListener(DemoApplication::onMessageCreate);
-        getAllListeners(api);
         setSlashCommands(server, api);
-
+        logAllListeners(api);
         return api;
     }
 
@@ -73,9 +70,7 @@ public class DemoApplication {
                         "answer",
                         "Answer"))
         ).createForServer(server).join();
-        api.addSlashCommandCreateListener(pounceListener);
-        api.addSlashCommandCreateListener(joinListener);
-        getAllListeners(api);
+        api.addSlashCommandCreateListener(slashCommandListener);
     }
 
 }
