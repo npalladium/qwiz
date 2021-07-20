@@ -1,5 +1,6 @@
 package com.quantumdisruption.qwiz.QWiz;
 
+import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
 import com.quantumdisruption.qwiz.QWiz.listeners.SlashCommandListener;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
@@ -17,6 +18,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import javax.annotation.PreDestroy;
 import java.util.Arrays;
 
 @Slf4j
@@ -29,9 +31,18 @@ public class QwizApplication {
     @Autowired
     SlashCommandListener slashCommandListener;
 
+    @Autowired
+    EmitterContainer emitterContainer;
+
 
     public static void main(String[] args) {
         SpringApplication.run(QwizApplication.class, args);
+    }
+
+    @PreDestroy
+    public void tearDown() {
+        log.info("Shutting Down");
+        emitterContainer.getPounceSubscribers().forEach(emitter -> {emitter.complete();});
     }
 
     private static void onMessageCreate(MessageCreateEvent event) {
