@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 @RepositoryRestResource(collectionResourceRel = "quizzes", path = "quizzes")
 public interface QuizRepository extends MongoRepository<Quiz, String> {
+    Quiz getASingleQuizByName(String name);
+    Quiz getASingleQuizById(String id);
 }
