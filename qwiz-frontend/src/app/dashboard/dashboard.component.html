@@ -1,1 +1,13 @@
-<p>dashboard works!</p>
+<mat-drawer-container class="example-container" autosize style="height:100%;width:100%">
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened style="min-width:30%">
+    <p>Answers</p>
+    <app-eventlistener></app-eventlistener>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle Answers Pane
+    </button>
+  </div>
+
+</mat-drawer-container>
