@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RealTime {
-    String status;
+public class ActionResult {
+    String message;
 }

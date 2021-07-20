@@ -3,7 +3,7 @@ package com.quantumdisruption.qwiz.QWiz.controllers;
 import com.quantumdisruption.qwiz.QWiz.containers.PresentationState;
 import com.quantumdisruption.qwiz.QWiz.domain.Question;
 import com.quantumdisruption.qwiz.QWiz.repositories.QuizRepository;
-import com.quantumdisruption.qwiz.QWiz.responses.RealTime;
+import com.quantumdisruption.qwiz.QWiz.responses.ActionResult;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.entity.channel.ServerTextChannel;
@@ -49,17 +49,17 @@ public class PresentationController {
     @PostMapping("/nextquestion")
     public RealTime nextQuestion() {
         sendSlides(Arrays.asList(1, 2), outputFolder, discordApi, teams);
-        return new RealTime("success");
+        return new ActionResult("success");
     }
 
     @PostMapping("/hint")
-    public RealTime hint() {
-        return new RealTime("success");
+    public ActionResult hint() {
+        return new ActionResult("success");
     }
 
     @PostMapping("/answer")
-    public RealTime answer() {
-        return new RealTime("success");
+    public ActionResult answer() {
+        return new ActionResult("success");
     }
     
     private static void sendSlides(){
