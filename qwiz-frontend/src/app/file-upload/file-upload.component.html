@@ -12,17 +12,4 @@
   </div>
 </div>
 
-<div *ngIf="currentFile" class="progress my-3">
-  <div
-    class="progress-bar progress-bar-info progress-bar-striped"
-    role="progressbar"
-    attr.aria-valuenow="{{ progress }}"
-    aria-valuemin="0"
-    aria-valuemax="100"
-    [ngStyle]="{ width: progress + '%' }"
-  >
-    {{ progress }}%
-  </div>
-</div>
-
 <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
