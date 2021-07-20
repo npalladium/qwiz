@@ -98,6 +98,8 @@ public class SlashCommandListener implements SlashCommandCreateListener {
                 emitter.send(eventBuilder);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception ex) {
+                emitter.completeWithError(ex);
             }
         }
     }
