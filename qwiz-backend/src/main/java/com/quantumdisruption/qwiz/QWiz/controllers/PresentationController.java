@@ -47,7 +47,7 @@ public class PresentationController {
     private List<ServerTextChannel> teams = getTeams(server);
 
     @PostMapping("/nextquestion")
-    public RealTime nextQuestion() {
+    public ActionResult nextQuestion() {
         sendSlides(Arrays.asList(1, 2), outputFolder, discordApi, teams);
         return new ActionResult("success");
     }
