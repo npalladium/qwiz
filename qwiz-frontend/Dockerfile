@@ -3,6 +3,8 @@
 FROM node:latest as build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
+COPY etc/nginx/ng.conf /etc/nginx/conf.d/
+RUN rm /etc/nginx/conf.d/default.conf
 RUN npm install && npm run build
 
 FROM nginx:latest
