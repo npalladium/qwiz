@@ -63,12 +63,12 @@ public class DemoApplication {
         SlashCommand.with("jointeam", "Join this team",
                 Arrays.asList(SlashCommandOption.create(SlashCommandOptionType.INTEGER,
                         "team",
-                        "team which you want to join"))
+                        "team which you want to join", true))
         ).createForServer(server).join();
         SlashCommand.with("pounce", "Secret attempt",
                 Arrays.asList(SlashCommandOption.create(SlashCommandOptionType.STRING,
                         "answer",
-                        "Answer"))
+                        "Answer", true))
         ).createForServer(server).join();
         api.addSlashCommandCreateListener(slashCommandListener);
     }
