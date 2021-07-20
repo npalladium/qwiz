@@ -2,6 +2,9 @@
 
 Web App and Discord Bot to conduct college quizzes online.
 
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+
+
 ## Getting Started
 
 These instructions will give you a copy of the project up and running on your local machine.
@@ -50,6 +53,9 @@ This project uses Spring Boot's Docker buildpack and does not have an explicit D
 
 - Server Sent Events with Spring Boot
 - Dynamically generating forms with Angular's `FormArray`.
+
+## TODO
+Refer project board and commit messages
 
 
 ## Authors
