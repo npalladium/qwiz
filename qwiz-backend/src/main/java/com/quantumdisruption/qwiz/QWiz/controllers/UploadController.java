@@ -9,6 +9,7 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,6 +34,11 @@ public class UploadController {
 
     private final static String UPLOADED_FOLDER = "/uploads/";
 
+    @Value("${app.uploads.location}")
+    private String uploadFolder;
+    @Value("${app.outputs.location}")
+    private String outputFolder;
+
     @Autowired
     EmitterContainer emitterContainer;
 
@@ -48,12 +54,12 @@ public class UploadController {
         try {
 
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(uploadFolder + file.getOriginalFilename());
             createFileIfNotExists(path);
             Files.write(path, bytes);
             new Thread(() -> {
                 try {
-                    generateImagesFromPDF(path.toFile(), "jpg");
+                    generateImagesFromPDF(path.toFile(), "jpg", uploadFolder);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,25 +73,25 @@ public class UploadController {
     }
 
 
-    private static void generateImagesFromPDF(File file, String extension) throws IOException {
+    private static void generateImagesFromPDF(File file, String extension, String outputFolder) throws IOException {
         PDDocument document = PDDocument.load(file);
         PDFRenderer pdfRenderer = new PDFRenderer(document);
         String imgPath;
-        FileUtils.cleanDirectory(Paths.get(UPLOADED_FOLDER, "output").toFile());
+        FileUtils.cleanDirectory(Paths.get(outputFolder).toFile());
         log.info("Generating images");
         for (int page = 0; page < document.getNumberOfPages(); ++page) {
-            generateImage(extension, pdfRenderer, page);
+            generateImage(extension, pdfRenderer, page, outputFolder);
         }
         document.close();
     }
 
-    private static void generateImage(String extension, PDFRenderer pdfRenderer, int page) throws IOException {
+    private static void generateImage(String extension, PDFRenderer pdfRenderer, int page, String outputFolder) throws IOException {
         String imgPath;
         BufferedImage bim = pdfRenderer.renderImageWithDPI(
                 page,
                 300,
                 ImageType.RGB);
-        imgPath = String.format("%s/output/pdf-%03d.%s", UPLOADED_FOLDER, page + 1, extension);
+        imgPath = String.format("%s/pdf-%03d.%s", outputFolder, page + 1, extension);
         createFileIfNotExists(Paths.get(imgPath));
         ImageIOUtil.writeImage(
                 bim,
