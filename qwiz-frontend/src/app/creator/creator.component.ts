@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { QuizFormService } from '../services/quiz-form.service';
 
 @Component({
   selector: 'app-creator',
@@ -13,7 +14,7 @@ export class CreatorComponent implements OnInit {
 
   secondFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, private _service: QuizFormService) {}
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -40,4 +41,20 @@ export class CreatorComponent implements OnInit {
     deleteQuestion(questionIndex: number) {
       this.questions.removeAt(questionIndex);
     }
+  processQuestions(question: any) {
+    let q = {
+      que: question.que.split(',').map((s: string) => s.trim()).map(Number),
+      hint: question.hint.split(',').map((s: string) => s.trim()).map(Number),
+      ans: question.ans.split(',').map((s: string) => s.trim()).map(Number)
+    }
+    return q;
+  }
+  submitQuizDetails() {
+    let quizDetails = {
+      name: this.firstFormGroup.controls['quiz'].value,
+      questions: this.secondFormGroup.controls['questions'].value.map(this.processQuestions)
+    }
+    console.log(quizDetails);
+    this._service.addQuiz(quizDetails).subscribe((data: any) => console.log(data));
+  }
 }

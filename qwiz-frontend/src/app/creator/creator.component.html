@@ -43,6 +43,9 @@
               <mat-icon class="add-course-btn">add</mat-icon>
             </button>
           </form>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
         </mat-step>
 
         <mat-step>
@@ -51,6 +54,7 @@
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button color="primary" (click)="submitQuizDetails()">Submit</button>
           </div>
         </mat-step>
       </mat-stepper>
