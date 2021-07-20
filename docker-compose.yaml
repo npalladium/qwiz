@@ -9,16 +9,22 @@ services:
   spring:
     image: "qwizspring:latest"
     volumes:
-    - ./.temp:/uploads
+    - ./.temp/uploads:/uploads
+    - ./.temp/outputs:/outputs
+    - ./.temp/logs:/logs
     depends_on:
       - mongodb
     networks:
       - frontend
       - backend
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
     env_file:
       - "./qwiz-backend/.env"
     ports:
       - "8080:8080"
+    links:
+      - "mongo:mongohost"
   mongodb:
     image: mongo
     networks:
