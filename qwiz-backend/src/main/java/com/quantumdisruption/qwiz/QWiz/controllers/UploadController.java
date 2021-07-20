@@ -33,7 +33,6 @@ import java.nio.file.Paths;
 @CrossOrigin
 public class UploadController {
 
-    private final static String UPLOADED_FOLDER = "/uploads/";
 
     @Value("${app.uploads.location}")
     private String uploadFolder;
@@ -60,7 +59,7 @@ public class UploadController {
             Files.write(path, bytes);
             new Thread(() -> {
                 try {
-                    generateImagesFromPDF(path.toFile(), "jpg", uploadFolder);
+                    generateImagesFromPDF(path.toFile(), "jpg", outputFolder);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
