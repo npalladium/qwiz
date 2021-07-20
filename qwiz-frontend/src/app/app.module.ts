@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { EventlistenerComponent } from './eventlistener/eventlistener.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { AnswersPipe } from './pipes/answers.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     DashboardComponent,
     LeaderboardComponent,
     EventlistenerComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    AnswersPipe
   ],
   imports: [
     BrowserModule,
