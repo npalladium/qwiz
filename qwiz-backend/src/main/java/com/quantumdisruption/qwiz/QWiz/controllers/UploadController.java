@@ -1,6 +1,7 @@
 package com.quantumdisruption.qwiz.QWiz.controllers;
 
 import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
+import com.quantumdisruption.qwiz.QWiz.repositories.QuizRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,6 +25,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -42,15 +41,38 @@ public class UploadController {
     @Autowired
     EmitterContainer emitterContainer;
 
+    @Autowired
+    QuizRepository quizRepository;
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
+
+    @PostMapping(value = {"/upload", "/upload/{name}"}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public ResponseEntity<JSONObject> singleFileUpload(@RequestParam("file") MultipartFile file,
-                                           RedirectAttributes redirectAttributes) {
+                                                       RedirectAttributes redirectAttributes,
+                                                       @PathVariable Optional<String> name) {
 
         if (file.isEmpty()) {
             return new ResponseEntity(new JSONObject().put("message", "Failed!"), HttpStatus.NOT_ACCEPTABLE);
         }
+        if (!name.isPresent()) {
+            handleUploadedFile(file, outputFolder);
+        } else {
+            String slidesOutputFolder = Paths.get(outputFolder, name.get()).toString();
+            mkdirIfNotExists(slidesOutputFolder);
+            handleUploadedFile(file, slidesOutputFolder);
+        }
+        return new ResponseEntity(new JSONObject().put("message", "Uploaded!"), HttpStatus.CREATED);
+    }
 
+
+    private void mkdirIfNotExists(String slidesOutputFolder) {
+        File slidesOutputDir = new File(slidesOutputFolder);
+        if (!slidesOutputDir.exists()) {
+            slidesOutputDir.mkdir();
+        }
+    }
+
+
+    private void handleUploadedFile(MultipartFile file, String slidesOutPutFolder) {
         try {
 
             byte[] bytes = file.getBytes();
@@ -59,7 +81,9 @@ public class UploadController {
             Files.write(path, bytes);
             new Thread(() -> {
                 try {
-                    generateImagesFromPDF(path.toFile(), "jpg", outputFolder);
+                    generateImagesFromPDF(path.toFile(),
+                            "jpg",
+                            slidesOutPutFolder);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -68,8 +92,6 @@ public class UploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return new ResponseEntity(new JSONObject().put("message", "Uploaded!"), HttpStatus.CREATED);
     }
 
 
