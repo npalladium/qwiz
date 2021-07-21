@@ -33,6 +33,9 @@ Run `setup.sh`.
 
 This project uses Spring Boot's Docker buildpack and does not have an explicit Dockerfile. You need to build the Spring image first. 
 
+#### What are the goals of this project?
+To learn!
+
 
 ## Documentation
 - Check out the docs folder.
@@ -53,6 +56,7 @@ This project uses Spring Boot's Docker buildpack and does not have an explicit D
 
 - Server Sent Events with Spring Boot
 - Dynamically generating forms with Angular's `FormArray`.
+- Perils of field-based DI/Autowiring
 
 ## TODO
 Refer project board and commit messages
