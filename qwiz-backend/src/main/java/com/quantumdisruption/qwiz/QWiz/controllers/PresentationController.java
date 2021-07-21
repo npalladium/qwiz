@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,8 +44,15 @@ public class PresentationController {
 
     private PresentationState presentationState = PresentationState.Intro;
 
-    private Server server = discordApi.getServerById(866228863247319081L).orElseThrow();
-    private List<ServerTextChannel> teams = getTeams(server);
+    private Server server;
+    private List<ServerTextChannel> teams;
+
+    @PostConstruct
+    public void init() {
+        this.server = discordApi.getServerById(866228863247319081L).get();
+        this.teams = getTeams(this.server);
+    }
+
 
     @PostMapping("/nextquestion")
     public ActionResult nextQuestion() {
@@ -61,7 +69,7 @@ public class PresentationController {
     public ActionResult answer() {
         return new ActionResult("success");
     }
-    
+
     private static void sendSlides(){
     }
 
