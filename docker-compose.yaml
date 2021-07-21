@@ -29,6 +29,8 @@ services:
     image: mongo
     networks:
       - backend
+    ports:
+      - "24141:27017"
 
 #volumes:
 #  files:
