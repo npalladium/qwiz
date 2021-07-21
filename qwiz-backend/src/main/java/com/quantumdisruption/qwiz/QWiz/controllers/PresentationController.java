@@ -2,6 +2,7 @@ package com.quantumdisruption.qwiz.QWiz.controllers;
 
 import com.quantumdisruption.qwiz.QWiz.containers.PresentationState;
 import com.quantumdisruption.qwiz.QWiz.domain.Question;
+import com.quantumdisruption.qwiz.QWiz.domain.Quiz;
 import com.quantumdisruption.qwiz.QWiz.repositories.QuizRepository;
 import com.quantumdisruption.qwiz.QWiz.responses.ActionResult;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.server.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,12 +22,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("presentation")
+@CrossOrigin
 public class PresentationController {
 
     @Autowired
@@ -47,26 +49,37 @@ public class PresentationController {
     private Server server;
     private List<ServerTextChannel> teams;
 
+    private boolean firstTime = true;
+
     @PostConstruct
     public void init() {
         this.server = discordApi.getServerById(866228863247319081L).get();
         this.teams = getTeams(this.server);
+        this.quizRepository.deleteAll();
     }
 
 
     @PostMapping("/nextquestion")
     public ActionResult nextQuestion() {
-        sendSlides(Arrays.asList(1, 2), outputFolder, discordApi, teams);
+        if (this.firstTime) {
+            List<Quiz> quizzes = this.quizRepository.findAll();
+            this.questionsLeft = quizzes.get(quizzes.size() - 1).getQuestions();
+            this.firstTime = false;
+        }
+        this.currentQuestion = questionsLeft.remove(0);
+        sendSlides(this.currentQuestion.getQue(), outputFolder, discordApi, teams);
         return new ActionResult("success");
     }
 
     @PostMapping("/hint")
     public ActionResult hint() {
+        sendSlides(this.currentQuestion.getHint(), outputFolder, discordApi, teams);
         return new ActionResult("success");
     }
 
     @PostMapping("/answer")
     public ActionResult answer() {
+        sendSlides(this.currentQuestion.getAns(), outputFolder, discordApi, teams);
         return new ActionResult("success");
     }
 
