@@ -1,7 +1,5 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Input } from '@angular/core';
 import {Subject, Observable, Observer }  from 'rxjs';
-
-
 
 @Component({
   selector: 'app-eventlistener',
@@ -23,13 +21,15 @@ export class EventlistenerComponent implements OnInit {
   subscription: any;
   observable: any;
 
+  @Input() listenTo: string = 'pounce';
+
   constructor(private zone: NgZone) {}
 
   ngOnInit(): void{
     this.observable = Observable.create((observer: Observer<any>) => {
 
       const eventSource = new EventSource('http://localhost:8080/stream-pounces', {withCredentials: true});
-      eventSource.addEventListener('pounce', (message: any) => observer.next(JSON.parse(message.data)));
+      eventSource.addEventListener(this.listenTo, (message: any) => observer.next(JSON.parse(message.data)));
 
     });
 
