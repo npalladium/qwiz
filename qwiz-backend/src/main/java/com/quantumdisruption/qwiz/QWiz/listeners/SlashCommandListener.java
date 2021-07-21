@@ -25,6 +25,8 @@ public class SlashCommandListener implements SlashCommandCreateListener {
     @Autowired
     EmitterContainer emitterContainer;
 
+
+
     @Override
     public void onSlashCommandCreate(SlashCommandCreateEvent event) {
         SlashCommandInteraction slashCommandInteraction = event.getSlashCommandInteraction();
@@ -45,6 +47,9 @@ public class SlashCommandListener implements SlashCommandCreateListener {
         }
         if (command.equals("endquiz")) {
             onEndQuiz(slashCommandInteraction, server, user);
+        }
+        if (command.equals("next")) {
+            slashCommandInteraction.createImmediateResponder().setContent("Not implemented yet" + new String(Character.toChars(0x1F349))).respond();
         }
 
     }
