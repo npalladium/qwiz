@@ -17,21 +17,20 @@ import {Subject, Observable, Observer }  from 'rxjs';
 export class EventlistenerComponent implements OnInit {
   someStrings:any[] = [];
   subscription: any;
+  observable: any;
 
   constructor(private zone: NgZone) {}
 
   ngOnInit(): void{
-    const observable = Observable.create((observer: Observer<any>) => {
+    this.observable = Observable.create((observer: Observer<any>) => {
 
       const eventSource = new EventSource('http://localhost:8080/stream-pounces', {withCredentials: true});
-      eventSource.onmessage = x => observer.next(x.data);
-      eventSource.onerror = x => observer.error(x);
-      eventSource.addEventListener('pounce', (message: any) => this.someStrings.push(JSON.parse(message.data)));
+      eventSource.addEventListener('pounce', (message: any) => observer.next(JSON.parse(message.data)));
 
     });
 
 
-    this.subscription = observable.subscribe({
+    this.subscription = this.observable.subscribe({
       next: (guid: string) => {
         console.log(guid);
         this.zone.run(() => this.someStrings.push(guid));
