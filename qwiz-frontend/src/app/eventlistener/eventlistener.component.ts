@@ -6,11 +6,15 @@ import {Subject, Observable, Observer }  from 'rxjs';
 @Component({
   selector: 'app-eventlistener',
   template: `
-    <ul>
-        <li *ngFor="let s of someStrings">
-           a string: {{ s | answers }}
-        </li>
-    </ul>
+    <mat-card>
+       {{ observable | async | answers | titlecase }}
+    </mat-card>
+    <mat-divider></mat-divider>
+    <mat-list>
+        <mat-list-item *ngFor="let s of someStrings">
+           {{ s | answers | titlecase }}
+        </mat-list-item>
+    </mat-list>
     `,
   styleUrls: ['./eventlistener.component.css']
 })
