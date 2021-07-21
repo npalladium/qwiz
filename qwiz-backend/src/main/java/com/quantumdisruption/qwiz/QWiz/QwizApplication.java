@@ -81,6 +81,9 @@ public class QwizApplication {
                         "answer",
                         "Answer", true))
         ).createForServer(server).join();
+        SlashCommand.with("next", "Go to next question").createForServer(server).join();
+        SlashCommand.with("hint", "Go to hint").createForServer(server).join();
+        SlashCommand.with("ans", "Go to answer").createForServer(server).join();
         api.addSlashCommandCreateListener(slashCommandListener);
     }
 
