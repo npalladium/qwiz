@@ -31,10 +31,13 @@ Run `setup.sh`.
 
 #### Why can't I just do docker-compose up?
 
-This project uses Spring Boot's Docker buildpack and does not have an explicit Dockerfile. You need to build the Spring image first. 
+This project uses Spring Boot's Docker buildpack and the backend does not have an explicit Dockerfile. You need to build the Spring image first. 
 
 #### What are the goals of this project?
-To learn!
+To learn about tech such as Spring Boot and Server Sent Events.
+
+#### Why is only the "happy path" implemented?
+I am still learning about some of the tech involved. When I started this project I had not worked with SSE, Spring Boot or Angular previously. Myfrontend development experience in general was also minimal and I had not written any non-trivial code in Java. Reach out to me, or open an issue or discussion if you have any feedback!
 
 
 ## Documentation
@@ -57,6 +60,7 @@ To learn!
 - Server Sent Events with Spring Boot
 - Dynamically generating forms with Angular's `FormArray`.
 - Perils of field-based DI/Autowiring
+- Reactive design patterns with RxJS
 
 ## TODO
 Refer project board and commit messages
