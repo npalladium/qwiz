@@ -15,6 +15,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { EventlistenerComponent } from './eventlistener/eventlistener.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AnswersPipe } from './pipes/answers.pipe';
+import { InteractionsComponent } from './interactions/interactions.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AnswersPipe } from './pipes/answers.pipe';
     LeaderboardComponent,
     EventlistenerComponent,
     FileUploadComponent,
-    AnswersPipe
+    AnswersPipe,
+    InteractionsComponent
   ],
   imports: [
     BrowserModule,
