@@ -61,6 +61,12 @@ I am still learning about some of the tech involved. When I started this project
 - Dynamically generating forms with Angular's `FormArray`.
 - Perils of field-based DI/Autowiring
 - Reactive design patterns with RxJS
+- Angular CLI Usage
+- Angular artifact types (Component, Class, Service, Pipe etc)
+- Angular pipes (both built-in and custom)
+- Angular component lifecycle basics
+- Angular Decorators such as `@Input`
+- Lombok decorators
 
 ## TODO
 Refer project board and commit messages
