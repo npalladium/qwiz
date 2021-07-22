@@ -2,6 +2,7 @@ package com.quantumdisruption.qwiz.QWiz;
 
 import com.quantumdisruption.qwiz.QWiz.containers.EmitterContainer;
 import com.quantumdisruption.qwiz.QWiz.listeners.SlashCommandListener;
+import com.quantumdisruption.qwiz.QWiz.repositories.QuizRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
@@ -16,7 +17,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.util.Arrays;
@@ -37,6 +41,31 @@ public class QwizApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(QwizApplication.class, args);
+    }
+
+
+    @Component
+    public static class ApplicationLifecycle implements Lifecycle {
+
+        @Autowired
+        private QuizRepository quizRepository;
+
+        @Override
+        public void start() {
+            log.info("Application start");
+        }
+
+        @Override
+        public void stop() {
+            log.info("Application stop");
+            quizRepository.deleteAll();
+
+        }
+
+        @Override
+        public boolean isRunning() {
+            return true;
+        }
     }
 
     @PreDestroy
