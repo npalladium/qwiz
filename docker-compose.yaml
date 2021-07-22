@@ -6,6 +6,8 @@ services:
       - frontend
     ports:
       - "4200:80"
+    links:
+      - "spring:springhost"
   spring:
     image: "qwizspring:latest"
     volumes:
