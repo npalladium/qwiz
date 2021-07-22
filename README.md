@@ -54,6 +54,8 @@ I am still learning about some of the tech involved. When I started this project
 
 **Deployment:** Docker, Docker-compose
 
+![Architecture](./docs/images/diagrams_image.png)
+
 
 ## Lessons Learned
 
