@@ -33,7 +33,7 @@ export class CreatorComponent implements OnInit {
     addQuestion() {
       const questionForm = this._formBuilder.group({
         que: ['', Validators.required],
-        hint: [''],
+        hint: ['', Validators.required],
         ans: ['', Validators.required],
       });
       this.questions.push(questionForm);
