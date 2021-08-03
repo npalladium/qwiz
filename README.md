@@ -1,6 +1,6 @@
 # QWiz
 
-Web App and Discord Bot to conduct college quizzes online.
+Web App and Discord Bot to conduct college quizzes online. IT IS NOT PRODUCTION READY.
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
